@@ -21,8 +21,9 @@ function solution(name) {
     }, 0);
     if (sumOfArr === 0) break;
     let left = 0,
-      right = 0;
-    (leftIndex = index), (rightIndex = index);
+      right = 0,
+      leftIndex = index,
+      rightIndex = index;
     while (upDownCount[leftIndex] <= 0) {
       left++;
       if (leftIndex <= 0) leftIndex = upDownCount.length - 1;
