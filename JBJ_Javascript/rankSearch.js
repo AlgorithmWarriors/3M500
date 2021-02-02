@@ -44,6 +44,7 @@ const queryParsing = (query) => {
 const findLowerBound = (scores, target) => {
   let start = 0,
     end = scores.length - 1;
+  if (Number(scores[end]) < target) return scores.length;
   if (start === end) {
     end = Number(scores[0]) > target ? 0 : 1;
   }
@@ -76,32 +77,43 @@ function solution(info, query) {
 
   query.forEach((elem) => {
     const [givenCondition, givenScore] = queryParsing(elem);
-    const fitScores = infoObject[givenCondition].sort((a, b) => a - b);
-    const lowerBound = findLowerBound(fitScores, givenScore);
+    if (infoObject[givenCondition] !== undefined) {
+      const fitScores = infoObject[givenCondition].sort((a, b) => a - b);
+      const lowerBound = findLowerBound(fitScores, givenScore);
 
-    answer.push(fitScores.splice(lowerBound).length);
+      answer.push(fitScores.slice(lowerBound).length);
+    } else answer.push(0);
   });
 
   return answer;
 }
 
+// console.log(
+// 	givenCondition,
+// 	givenScore,
+// 	infoObject[givenCondition],
+// 	lowerBound,
+// 	fitScores.slice(lowerBound),
+// 	fitScores.slice(lowerBound).length
+// );
 console.log(
   solution(
     [
       "java backend junior pizza 150",
-      "python frontend senior chicken 210",
-      "python frontend senior chicken 150",
-      "cpp backend senior pizza 260",
+      "java frontend senior pizza 210",
+      "java frontend senior pizza 150",
+      "java backend senior pizza 260",
       "java backend junior chicken 80",
-      "python backend senior chicken 50",
+      "java backend senior chicken 50",
     ],
     [
-      "java and backend and junior and pizza 100",
+      "cpp and backend and junior and pizza 100",
       "python and frontend and senior and chicken 200",
       "cpp and - and senior and pizza 250",
       "- and backend and senior and - 150",
       "- and - and - and chicken 100",
-      "- and - and - and - 150",
+      "- and - and - and - 300",
+      "cpp and - and senior and pizza 500",
     ]
   )
 );
